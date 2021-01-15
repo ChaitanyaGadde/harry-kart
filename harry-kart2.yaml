@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: harry-kart
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: harry-kart
+  type: LoadBalancer

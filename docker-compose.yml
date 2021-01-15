@@ -1,0 +1,15 @@
+version: '2.2'
+services:
+  harrykart:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: harry-kart
+    ports:
+      - "8080:8080"
+    scale: 1
+    networks:
+      - network1
+
+networks:
+  network1:

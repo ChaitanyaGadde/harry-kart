@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: harry-kart
+  name: harry-kart
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: harry-kart
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.network/network1: "true"
+        io.kompose.service: harry-kart
+    spec:
+      containers:
+      - image: harry-kart:latest
+        imagePullPolicy: "Never"
+        name: harry-kart
+        ports:
+        - containerPort: 8080
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}
+---
+#apiVersion: extensions/v1beta1
+#kind: NetworkPolicy
+#metadata:
+#  creationTimestamp: null
+#  name: network1
+#spec:
+#  ingress:
+#    - from:
+#        - podSelector:
+#            matchLabels:
+#              io.kompose.network/network1: "true"
+#  podSelector:
+#    matchLabels:
+#      io.kompose.network/network1: "true"
+#---
+kind: Service
+apiVersion: v1
+metadata:
+  name: harry-kart
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    io.kompose.service: harry-kart
+  type: LoadBalancer
