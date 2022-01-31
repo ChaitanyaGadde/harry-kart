@@ -10,6 +10,7 @@ services:
     scale: 1
     networks:
       - network1
-
+      
 networks:
   network1:
+ 
